@@ -1,0 +1,71 @@
+<section class="ds contacts section_padding_50 ms" style="background-image: url('../assets/images/remy.jpg'); background-size: cover; background-position-y: -340px;">
+  <div class="container" style="background: #000000c4;width: 100%;">
+    <div class="row topmargin_10 bottommargin_20">
+      <div class="col-sm-6 col-xs-12">
+        <div class="teaser text-center">
+          <h4 class="bottommargin_20">Área de soporte</h4>
+          Soporte
+          <br>
+          <span class="highlight">soporte@luxarymodels.com</span>
+          <br> +51 988 042 980
+        </div>
+      </div>
+     
+      <div class="col-sm-6 col-xs-12">
+        <div class="teaser text-center">
+          <h4 class="bottommargin_20">Director</h4>
+          Edie
+          <br>
+          <span class="highlight">edie@luxarymodels.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="ds section_padding_70">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 text-center">
+        <h2 class="big margin_0">Contáctanos</h2>
+        <h2 class="muellerhoff topmargin_5 bottommargin_50 highlight">Formulario</h2>
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field>
+                <mat-label class="cwhite">Nombre</mat-label>
+                <input matInput formControlName="name" placeholder="Ingresa tu nombre.." required>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field>
+                <mat-label class="cwhite">Teléfono</mat-label>
+                <input matInput formControlName="phone" placeholder="Ingresa tu teléfono.." required>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field>
+                <mat-label class="cwhite">Email</mat-label>
+                <input matInput formControlName="email" placeholder="Ingresa tu email.." required>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12">
+              <mat-form-field>
+                <mat-label class="cwhite">Mensaje</mat-label>
+                <input style="height: 75px;" matInput formControlName="message" placeholder="Ingresa tu Mensaje.." required>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-12" style="text-align: center;">
+               <re-captcha (resolved)="resolved($event)" 
+              siteKey="6Lf1oE4aAAAAABGx5OGg9Xh91PiiL-Z9mIiORaUU">  
+              </re-captcha>
+            </div>
+          </div>
+          <br>
+          <button (click)="clearForm()" class="btn btn_post btn_clear color1">Limpiar</button>
+          <button type="submit" id="contact_form_submit" name="contact_submit" class="btn btn_post color1">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

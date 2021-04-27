@@ -1,0 +1,239 @@
+<section class="ds model-page section_padding_70 section_padding_bottom_60 columns_padding_25">
+  <a (click)="ClickCall()" class="btn btn_post btnfix btnfix2 b75" style="background: #4caf50;"> <img width="25" height="25" src="../assets/images/whatsapp.svg">
+  </a>
+  <a style="right:100px;" (click)="ClickCallNormal()" href="tel:+51{{phone}}" class="btn btn_post btnfix btnfix2"> 
+    <img width="25" height="25" src="../assets/images/phone.svg">
+  </a>
+  <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Cargando.. </p>
+  </ngx-spinner>
+  <div class="container" style="width: 95%;">
+    <div class="row">
+      <div class="col-md-4 col-xs-12">
+        <div class="vertical-item with_background models_square">
+          <div class="item-media" style="text-align: center;">
+            <img style="border-radius: 8px;" src="https://luxarymodels.com/backend/public/images/models/{{profile_picture}}" alt="Modelo {{username}}, {{age}} años, en {{address}} ">
+          </div>
+          <div class="item-content with_padding">
+            <div class="row">
+              <div class="col-md-8 col-xs-6 text-left">
+                <h2 class="big topmargin_0 bottommargin_25">{{username}}.</h2>
+              </div>
+              <div class="col-md-4 col-xs-6 text-right quitmargin">
+                <button style="font-size: 12px;     position: relative; right: 10px;" *ngIf="FollowStatus" (click)="ClickFollow()" class="btn btn_post"> <i class="fa fa-user"></i> {{totalfollowers}}, Follow</button>
+                <button style="font-size: 12px;     position: relative; right: 10px;" *ngIf="!FollowStatus" (click)="UnFollow()" class="btn btn_post"> <i class="fa fa-user"></i> {{totalfollowers}}, Unfollow</button>
+              </div>
+              <div class="col-md-12 col-xs-12">
+                <span>Distrito: {{address}}</span>
+              </div>
+              <div class="col-md-12 col-xs-12 ">
+                <label>Calificación: </label>
+                <ngb-rating style="outline:none;" [(rate)]="currentRate" [max]="5" (rateChange)="onRate($event)">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100" [class.bad]="index > 5">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+              </div>
+              <div class="col-md-12 col-xs-12 visible-xs">
+                <label style="left:0px;" class="label-class">Fotos
+        <span class="verificado" *ngIf="check_verified!=0">Verificadas</span>
+        <span class="sin-verificar" *ngIf="check_verified===0">Sin Verificar</span>
+        </label>
+              </div>
+              <div class="col-md-4 text-right">
+              </div>
+            </div>
+          </div>
+          <div class="model-parameters grey gradient_bg_goriz before_cover">
+            <div class="bg_overlay"></div>
+            <div>
+              <span class="bold">Edad</span>
+              <br>
+              <span>{{age}}</span>
+            </div>
+            <div>
+              <span class="bold">Altura</span>
+              <br>
+              <span>{{height}}</span>
+            </div>
+            <div>
+              <span class="bold">Peso</span>
+              <br>
+              <span>{{weight}}</span>
+            </div>
+            <div>
+              <span class="bold">Senos</span>
+              <br>
+              <span *ngIf="tits==='No'">Naturales</span>
+              <span *ngIf="tits!='No'">Operados</span>
+            </div>
+            <div>
+              <span class="bold">Precio</span>
+              <br>
+              <span>S/. {{price}}/h</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-xs-12" style="background: black;    color: #d0d0d0;">
+          <div class="container">
+            <br>
+            <label>Haz más visible tu anuncio</label>
+          </div>
+          <div class="col-md-12">
+            <button [routerLink]="['/dashboard']" style="width: 100%;" class="btn btn_post">Subidas automaticas</button>
+          </div>
+          <div class="col-md-12">
+            <label>Gestiona tu anuncio</label>
+            <button [routerLink]="['/dashboard']" style="width: 100%;" class="btn btn_post">Panel de control</button>
+          </div>
+          <div class="col-md-12 col-xs-12" style="text-align: center;">
+            <div class="col-md-12 col-xs-12">
+              <label>Estadísticas de este anuncio</label>
+            </div>
+            <div class="col-md-4 col-xs-4">
+              <span><b>{{views}}</b></span>
+              <p>Visitas</p>
+            </div>
+            <div class="col-md-4 col-xs-4">
+              <span><b>{{calls}}</b></span>
+              <p>Llamadas</p>
+            </div>
+            <div class="col-md-4 col-xs-4">
+              <span><b>3</b></span>
+              <p>Subidas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 col-xs-12">
+        <button class="btnreport" mat-button [matMenuTriggerFor]="menu"><i class="rt-icon2-warning-outline"></i></button>
+        <mat-menu #menu="matMenu">
+          <button style="color:white;" (click)="reportar()" mat-menu-item>Reportar anuncio</button>
+        </mat-menu>
+        <h2 class="topmargin_0 bottommargin_30">{{username}}, {{age}} Años.
+        <img style="cursor: pointer;" (click)="add_fav();" class="addheart" src="../assets/images/{{svg}}">
+        </h2>
+        <span style="position: relative; top: -20px;">Estoy disponible a partir de las {{hour_available}}.</span>
+        <p style="font-size: 16px; color: white; text-align: justify;">{{description}}</p>
+        <br>
+        <span>Lugar de encuentro: 
+        <b *ngFor="let item of meeting_place"> {{item}} </b>
+        </span>
+        <section class="ds page_portfolio section_padding_70 columns_padding_0">
+          <div style="padding-top: 25px;" class="container-fluid">
+            <div class="row">
+              <div class="margin-rowx1 col-sm-12 col-xs-12">
+                <label class="label-class">Mis servicios</label>
+                
+
+                <table class="table">
+                  <thead>
+                    <tr class="color-gray-table">
+                      <th>Servicios</th>
+                      <th>Costo Adicional</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of ModelServices">
+                      <td>{{item.name}}</td>
+                      <td>$0,00</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+            
+
+              </div>
+
+              <div class="margin-rowx col-md-12 col-xs-12">
+                <label class="label-class">Mis Fotos
+        <span class="verificado" *ngIf="check_verified!=0">Verificadas</span>
+        <span class="sin-verificar" *ngIf="check_verified===0">Sin Verificar</span>
+        </label>
+
+                 <ngx-masonry>
+      <div ngxMasonryItem [useImagesLoaded]="true" *ngFor="let item of photos; let i = index"  class="masonry-item2">
+                  <div *ngIf="item.photos" (click)="openImage(item.photos)" class="vertical-item gallery-title-item content-absolute">
+                    <div style="text-align: left;" class="item-media">
+                      <img alt="Modelo {{username}}, {{age}} años, en {{address}} " src="https://luxarymodels.com/backend/public/images/models/{{item.photos}}">
+                    </div>
+                  </div>
+                  
+                </div>
+     </ngx-masonry>
+              </div>
+
+              
+              <div class="margin-rowx col-md-12 col-xs-12"><br>
+                <div *ngFor="let item of Allcomments" class="col-md-12 col-xs-12">
+                  <div class="col-md-12 comment">
+                    <div class="col-md-12">{{item.created_at | date:'yyyy-MM-dd'}} - {{item.name}}</div>
+                    <div class="col-md-12">{{item.comentario}}</div>
+                  </div>
+                </div>
+                <input type="text" [(ngModel)]="comment" class="form-control" placeholder="Escribir un comentario">
+                <br>
+                <button (click)="sendComment()" class="btn btn_post btn1000">Comentar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #content let-modal>
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
+    <div class="modal-header">
+      <h4 style="position: relative; top: 5px;" class="modal-title" id="modal-basic-title">
+        Reservar modelo
+      </h4>
+      <button style="position: relative; top: -10px;" type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">
+          ×
+        </span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row" style="text-align: center;">
+        <div class="col-md-12">
+          <i style="font-size: 55px;color:#e43975" class="rt-icon2-calendar"></i>
+        </div>
+        <div class="col-md-12">
+          <p style="font-size: 16px; position: relative; top: 10px;">¡Confirma tu reserva con esta modelo!</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" style="font-size: 14px; font-weight: normal;" class="btn btn_post btn-outline-dark">
+        Confirmar reserva
+      </button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #ImageViewer let-modal>
+  <img [src]='pathImage' style="width: 100%;">
+</ng-template>
+<ng-template #report let-modal>
+  <div class="modal-header">
+    <h4 style="position: relative; top: 5px;" class="modal-title" id="modal-basic-title">Reportar Anuncio</h4>
+    <button style="position: relative; top: -10px;" type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="text-align: center;">
+      <div class="col-md-12">
+        <i style="font-size: 55px;color:#e43975" class="rt-icon2-warning-outline"></i>
+      </div>
+      <div class="col-md-12">
+        <p style="font-size: 16px;">¿Consideras que este anuncio incumple nuestras politicas, Terminos y condiciones?.</p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="report_ads()" style="font-size: 14px; font-weight: normal;" class="btn btn_post btn-outline-dark">
+      Confirmar reporte
+    </button>
+  </div>
+</ng-template>

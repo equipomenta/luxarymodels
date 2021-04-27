@@ -1,0 +1,84 @@
+<section class="ds ms background-black page_models models_portrait gorizontal_padding section_padding_70">
+  <div style="padding-top:30px;" class="container-fluid container-f-xs">
+    <button style="width: 100%;color: white;" (click)="toggle_filter()" class="btn btn_post posfilter visible-xs"><i class="rt-icon2-search2"></i> Filtrar resultados</button>
+    <div #filterhome class="row boxed-padding bottommargin_40 rowstyle hidden-xs">
+      <div class="fixbr"></div>
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="form-group">
+            <input type="text" (change)="somethingChanged($event)" class="form-control" id="search-text" aria-describedby="search-text" [(ngModel)]="searchText" placeholder="¿En dónde te encuentras?">
+          </div>
+          <ul class="list-group list-group-flush">
+            <li (click)="PipeFilter($event,c)" class="list-group-item" *ngFor="let c of PDistrict | appFilter: searchText" [content]="c.name" appHighlight [searchedWord]="searchText" [classToApply]="'font-weight-bold'">
+              {{c.name1}},{{c.name2}}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="form-group">
+            <input type="text" (change)="somethingChanged2($event)" class="form-control" id="search-text2" aria-describedby="search-text" [(ngModel)]="searchText2" placeholder="¿Que nacionalidad buscas?">
+          </div>
+          <ul class="list-group list-group-flush">
+            <li (click)="PipeFilter2($event,c)" class="list-group-item" *ngFor="let c of country | appFilter: searchText2" [searchedWord]="searchText2" [content]="c.name1" [classToApply]="'font-weight-bold'">{{c.name1}}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="name_search" placeholder="¿Sabes su nombre?">
+        </div>
+      </div>
+      <div class="col-lg-1">
+        <button (click)="refreshFilter()" class="filterbtn">
+          <i style="font-size: 20px;color: #818181;" class="fa fa-refresh"></i>
+        </button>
+      </div>
+      <div class="col-lg-2">
+        <button (click)="SearchFilter()" class="btn btn_post btnsearch"><i class="fa fa-search"></i> Buscar</button>
+      </div>
+    </div>
+    <ngx-masonry [options]="{resize:true}" (layoutComplete)="doStuff($event)">
+      <div ngxMasonryItem [useImagesLoaded]="true" *ngFor="let items of models" [routerLink]="['/modelo/escort/', items.id_ads]" class="masonry-item">
+        <div>
+          <a [routerLink]="['/modelo/escort/', items.id_ads]" [ngClass]="{'corner-vip': items.check_premium===1}" class="item js-nextprev-item corner">
+            <div class="profile-image">
+              <img masonryLazy loading="lazy" width="300" height="500" class="lozad" alt="Modelo {{items.username}}, {{items.age}} Años." src="https://luxarymodels.com/backend/public/images/models/{{items.photo1}}">
+              <div style="background: transparent;" class="badges">
+                <div *ngIf="items.check_cam!=0" class="badge badge-video">
+                  <span class="rt-icon2-video2"></span>
+                  <img class="svgicohome" alt="video-camera" src="../assets/images/icons/video-camera.svg" width="25" height="25">
+                </div>
+                <div *ngIf="items.check_card!=0" class="badge badge-review">
+                  <img class="svgicohome" alt="Credit-Card" src="../assets/images/icons/credit-card.svg" width="25" height="25">
+                </div>
+              </div>
+              <div *ngIf="items.check_verified===1" class="verified">Verificada</div>
+            </div>
+            <div class="info">
+              <img style="float: left;" width="10" height="10" alt="nacionalidad" class="flaghome" src="https://luxarymodels.com/backend/public/images/flags/{{items.flag}}.svg">
+              <h2>{{items.username}}, {{items.age}} Años.</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+    </ngx-masonry>
+    <br>
+    <div class="row">
+      <div class="col-sm-12 text-center margin_0">
+        <a (click)="loadmore()" style="color:white; cursor: pointer;" class="btn btn_post">Cargar más modelos..</a>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+    <p style="color: white">Cargando.. </p>
+  </ngx-spinner>
+</section>
+<div class="cookie-banner" *ngIf="getCookie()">
+  <div class="policy">
+    <p>Éste sitio web usa cookies, Puede leer más sobre el uso de cookies en nuestras <a [routerLink]="['/terminos-condiciones']">politicas de privadad</a> </p>
+    <button (click)="allowcookie()" class="btn btn-success btn1000 close">Aceptar Términos</button>
+  </div>
+</div>
